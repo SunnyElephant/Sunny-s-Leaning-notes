@@ -1,4 +1,0 @@
-Message msg = handler.obtainMessage();	//是直接在messagepool中取出message对象，节省了创建这个对象的开销
-handler.obtainMessage.sendToTarget();	//和普通的handler.sendMessage()方法是一样的
-
-handler.sendEmptyMessage(0);		//和obtainMessage().sendToTarget()的效率差不多

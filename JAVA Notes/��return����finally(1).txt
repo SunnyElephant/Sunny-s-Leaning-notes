@@ -1,9 +1,0 @@
-在try-catch-finally中, 当return遇到finally：
-
-     1.在try catch块里return的时候，finally也会被执行。如果return语句在前，return语句执行完了以后才执行finally。
-
-     2.return 语句会把后面的值复制到一份用来返回，如果return的是基本类型的，finally里对变量的改动将不起效果，如果   return 的是引用类型的，改动将可以起效果。
-
-     3.finally里的return语句会把try catch块里的return语句效果给覆盖掉。
-
-结论：看来return语句并不一定都是函数的出口，执行return时，只是把return后面的值复制了一份到返回值变量里去了。

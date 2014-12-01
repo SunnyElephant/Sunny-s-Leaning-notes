@@ -1,2 +1,0 @@
-PMON: PMON> ifaddr syn0 192.168.3.110
-开发板操作系统下:ifconfig eth0 192.168.3.110

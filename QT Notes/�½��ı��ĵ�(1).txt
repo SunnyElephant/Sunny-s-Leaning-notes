@@ -1,1 +1,0 @@
-一些比较经典的位图文件存放在QT的安装目录中的 /examples/application目录下

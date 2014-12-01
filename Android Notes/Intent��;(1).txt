@@ -1,4 +1,0 @@
-Intent用途：
-1.启动Activity
-2.启动ACTION（打开图片，窗体等）利用系统的Intent.ACTION_VIEW可以实现很多功能（打开图片，网页，电话界面等）
-3.启动

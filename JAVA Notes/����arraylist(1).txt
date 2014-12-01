@@ -1,7 +1,0 @@
-List是不能强制转换成ArrayList的否则会出错，反之可以。
-
-List<Float> list= data.subList(1499, 2999);  //这种情况下截取成功
-ArrayList<Float> list= (ArrayList<Float>)data.subList(1499, 2999);  //这种情况下截取出错
-
-List类的对象都不能在循环中remove数据，否则会报CurrentModificationException错误
-

@@ -1,1 +1,0 @@
-图片能显示多少张，就加载多少次adapter的getView函数，如果有新的图片显示，则加载adapter的getView函数

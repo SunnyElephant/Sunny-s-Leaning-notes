@@ -1,2 +1,0 @@
-grant select onsakila.* to 'user1'@'localhost'identified by '123';
-

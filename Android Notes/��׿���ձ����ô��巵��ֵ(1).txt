@@ -1,7 +1,0 @@
-接收返回数据的窗体：
-startActivityForResult(intent,code);	//设置返回响应
-重写onActivityResult方法来处理收到的数据
-
-
-返回数据窗体：
-setResult(resultcode,intent);

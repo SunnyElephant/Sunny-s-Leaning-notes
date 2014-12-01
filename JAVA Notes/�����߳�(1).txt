@@ -1,3 +1,0 @@
-当线程sleep，或者等待输入/输出，或者被wait，或者对象锁(synchronized)锁定时，线程会进入blocked状态。
-
-synchronized可以提供线程锁，当线程A进入这个区块之后，线程B必须等到线程A执行完这个区块后，才能去执行。在这个等待过程中，线程B进入blocked状态，再回到runnable状态，等待CPU调用。

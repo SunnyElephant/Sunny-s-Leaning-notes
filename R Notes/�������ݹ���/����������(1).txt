@@ -1,1 +1,0 @@
-rename(dataframe,c(oldname1="newname1",oldname2="newname2"))

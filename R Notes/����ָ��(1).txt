@@ -1,4 +1,0 @@
-dev.off  						//将结果输出到屏幕上（如果前面设定了把结果输出到文件）
-sink("filename",append=TRUE/FALSE,split=TRUE/FALSE)	//把输出定向到文件/是否在文件末尾添加/是否同时显示在屏幕上
-fix(object)						//直接编辑对象
-dev.new()						//添加新的图像显示视图

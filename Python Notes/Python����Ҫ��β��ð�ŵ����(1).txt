@@ -1,3 +1,0 @@
-if和,elif,else结尾
-def结尾
-for结尾

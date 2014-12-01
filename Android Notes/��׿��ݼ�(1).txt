@@ -1,9 +1,0 @@
-Ctrl+1/F2     快捷修复
-Ctrl+D        快捷删除行
-Shift+Enter   快捷换行
-Ctrl+F11      运行项目
-Alt+上/下     快速移动行（可多行）
-Ctrl+M	      切换视图（最大化）
-Ctrl+/	      快速注释/取消注释
-Ctrl+Shift+/  快速注释(不可取消)
-/** + Enter   快速java doc

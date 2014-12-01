@@ -1,1 +1,0 @@
-insert into students values(NULL,"刘盈粲","22","男","1375185");

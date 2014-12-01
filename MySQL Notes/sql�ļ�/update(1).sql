@@ -1,1 +1,0 @@
-update students set name="刘盈粲" where age=20 and id>=5;		--将age=20,tel="-",id>=5的行的name改为“刘盈粲”

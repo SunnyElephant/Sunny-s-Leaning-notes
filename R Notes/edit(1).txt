@@ -1,2 +1,0 @@
-mydata<-data.frame(age=numeric(0),gender=character(0),weight=numeric(0))
-mydata<-edit(mydata)	//这里切记一定要把数据回传到一个对象，这里是mydata，否则编辑后的修改会丢失

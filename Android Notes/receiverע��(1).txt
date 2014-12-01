@@ -1,1 +1,0 @@
-receiver的注册要在androidmainfest.xml里面的<application>里面注册

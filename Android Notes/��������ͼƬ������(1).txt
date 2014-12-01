@@ -1,2 +1,0 @@
-android:scaleType="matrix"
-一定要xml对应控件描述那里加上上面那一句
