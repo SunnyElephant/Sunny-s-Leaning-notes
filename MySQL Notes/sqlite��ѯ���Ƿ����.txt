@@ -1,0 +1,2 @@
+
+注意：DBInfo是表名	  cmd.CommandText = "SELECT COUNT(*) FROM sqlite_master where type='table' and name='DBInfo'";

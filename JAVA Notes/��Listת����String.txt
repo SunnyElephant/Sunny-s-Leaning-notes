@@ -1,0 +1,1 @@
+String cutWordResult=cutWordList.toArray(new String[cutWordList.size()]);

@@ -1,0 +1,46 @@
+SYSZUXpinyin中文输入法的移植（到QT）
+一．首先是库libsyszuxpinyin.so的移植
+1. 将 SYSZUXpinyin.tar.bz2 拷到/tmp/进行解压 然后 cd SYSZUXpinyin
+2.修改syszuxpnyin.pro文件
+TEMPLATE = lib
+在.pro中添加
+RESOURCES += syszuxpinyin.qrc（可能已经修改完毕）
+3. qmake
+4. make
+
+注：如果在命令行用交叉编译工具编译不成的话（报错说找不到“main”，其实本来就没有main函数的），可以尝试用QT creator编译，在工具配置”Tools“里面”options“选择交叉编译工具，我没有找到报错的原因，但是却用QT creator编译通过。
+
+把生成的
+libSYSZUXpinyin.so
+libSYSZUXpinyin.so.1
+libSYSZUXpinyin.so.1.0
+libSYSZUXpinyin.so. 1.0.0
+拷贝到目标板（arm板）QTDIR的lib路径下面，我的是/usr/lib 。
+
+二．然后是把输入法编译到Qt中 
+将源码包中的syszuxim.h和syszuxpinyin.h头文件和syszuxpinyin.ui面板放置到你Qt程序的源代码路径下，把syszuxpinyin.ui添加到QT creator工程的Forms里。
+1. qmake -project生成.pro文件
+将.pro文件中添加  LIBS += -L/（有libSYSZUXpinyin.so这些库的路径） -lsyszuxpinyin （第二个一定是小l，大L为在指定路径下寻找，小l为连接库）
+在主界面源文件 .cpp中加入
+#include "syszuxpinyin.h"
+#include "syszuxim.h"
+在要用的类的头文件里添加也行。
+并在需要启动输入法的函数里面加
+QWSInputMethod* im = new SyszuxIM;
+QWSServer::setCurrentInputMethod(im);
+这样就安装好了输入法。
+
+但是并没有弹出软键盘。在以上两行下面可以写出弹出软键盘的指令：
+im->updateHandler(QWSInputMethod::FocusIn);
+（自然，要隐藏软键盘参数用FocusOut，这条指令会自动检测到有光标闪烁的编辑框然后弹出软键盘）；
+
+弹出了软键盘，但是中文字符为乱码，那么在工程文件的main函数里“MainWindow w”这一行下面添加如下一行：
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("GB2312")); 
+可以显示中文，注意，只添加这一行，编码方式不对或者多添加了其余的两行都是不能正常显示的。
+
+ 主函数里设成GB2312后，除了按钮上的汉字可以正常显示外，其他的如标题等都不能正常显示了。因为我们的linux下qt默认的中文环境是UTF-8格式，要正常显示中文必须转化成UTF-8格式。解决方法是：在头文件里#include <QTextCodec>，然后定义： QTextCodec *tc; 在对应的.cpp的构造函数里加上：tc =  QTextCodec::codecForName("UTF-8"); 就可以都显示中文了。
+
+注意：由于syszuxpinyin将ui面板样式已经编进了libsyszuxpinyin.so里，所以改变ui的样式也只能在SYSZUXpinyin里进行而无法在当前工程的syszuxpinyin里，最后将改变后的ui再次编译成库，然后拷入目标板。
+
+
+

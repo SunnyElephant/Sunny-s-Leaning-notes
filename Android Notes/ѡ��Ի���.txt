@@ -1,0 +1,42 @@
+public class SearchDeviceDialog extends Activity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.searchdevice);
+		System.out.println("i am here");
+		Dialog alertDialog = new AlertDialog.Builder(this).
+				setTitle("找不到设备？").
+				setMessage("您需要重新查找设备吗?").
+				setIcon(R.drawable.ic_launcher).
+				setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						setResult(1);
+						onDestroy();
+					}
+				}).
+				setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						onDestroy();
+					}
+				}).
+				create();
+		alertDialog.setCancelable(false);				//这一句设置点击窗体其他地方，对话框不被关闭
+		alertDialog.show();
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return false;
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		finish();
+	}
+}
+
+
+在其他地方用Intent启动这个窗体即可

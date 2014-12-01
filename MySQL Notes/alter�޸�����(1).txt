@@ -1,0 +1,2 @@
+修改的列名需要指定数据类型以及大小
+例如：alter table students change tel telphone char(13) default "-";

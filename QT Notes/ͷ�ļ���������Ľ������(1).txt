@@ -1,0 +1,55 @@
+一般情况下，C/C++要求所有的类型必须在使用前被定义，但是在一些特殊情况下，这种要求无法满足，例如，在类CMyView中保留了一个非模式对话框对象指针，该对象用于显示/修改一些信息。为了实现对话框"应用"按钮，把对话框做的修改立刻更新到view界面上，为此，需要在对话框类中需要保存view类的指针，这样定义关系就变成如下的代码：
+   #ifndef __MYVIEW_H__
+   #define __MYVIEW_H__
+   //这是view类的头函数
+   #include "MyDialog.h"
+   class CMyView::public CView
+   {
+   protected:
+       CMyDialog * pDlg;
+       //这里是其他定义
+   };
+   #endif
+   
+   #ifndef __MYDIALOG_H__
+   #define __MYDIALOG_H__
+   //这是对话框类的定义
+   #include "MyView.h"
+   class CMyDialog::public CDialog
+   {
+       protected:
+           CMyView * pView;
+           //其他定义
+   };
+   #endif
+   
+    从编译器角度看，编译MyDialog.CPP时，系统首先定义宏__MYDIALOG_H__，然后包含MyView.h，MyView.h中的#include "MyDialog.h"由于__MYDIALOG_H__已经定义，所以不再起作用。在CMyView类的声明中，CMyDialog* pDlg ;就会让编译器产生"CMyDialog"类型没有定义之类的错误，编译MyView.CPP文件出现的错误可以类似得到。   
+   更一般的情况，类A和类B需要彼此互相引用，这样必然有一个类会先被定义，而另外一个类后被定义，这样在先被定义的类引用后被定义的类的时候，就导致了所谓的超前引用。
+
+   超前引用导致的错误有以下几种处理办法：
+  1) 使用类声明
+   在超前引用一个类之前，首先用一个特殊的语句说明该标识符是一个类名，即将被超前引用。其使用方法是：
+           a)  用class ClassB；声明即将超前引用的类名
+           b)  定义class ClassA
+           c)  定义class ClassB;
+           d)  编制两个类的实现代码。
+    上述方法适用于所有代码在同一个文件中，一般情况下，ClassA和ClassB分别有自己的头文件和cpp文件，这种
+方法需要演变成：
+           a) 分别定义ClassA和ClassB，并在cpp文件中实现之
+           b) 在两个头文件的开头分别用class ClassB;和class ClassA;声明对方
+           c) 在两个cpp文件中分别包含另外一个类的头文件
+    NOTE:这种方法切记不可使用类名来定义变量和函数的变量参数，只可用来定义引用或者指针。     
+   2) 使用全局变量
+    由于全局变量可以避免超前引用，不用赘述。我的习惯是，把类对象的extern语句加在该类头文件的最后，大家喜欢
+怎样写那都没有什么大问题，关键是保证不要在头文件中胡乱包含。
+   3) 使用基类指针。
+    这种方法是在引用超前引用类的地方一律用基类指针。而一般情况下，两个互相引用的类并不涉及其基类，因此不会造成
+超前引用。以开始的例子说：在CMyDialog类中用CView*代替CMyView*，在CMyView类中用CDialog*代替CMyDialog*，这样必然
+不会造成超前引用。
+
+    说明：本文中，为了叙述方便，把class AClass;语句成为类AClass的声明，把class AClass开始的对AClass的类成员变量、
+成员函数原型等的说明称为类的定义，而把在CPP中的部分称为类的定义。如果大家对这三个词有不同的理解，请按照自己的本意
+
+
+
+

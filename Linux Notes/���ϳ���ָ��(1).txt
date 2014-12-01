@@ -1,0 +1,5 @@
+看启动参数：env
+
+修改板上IP：ifconfig eth0 ....
+
+看错误信息: dmesg|tail -20

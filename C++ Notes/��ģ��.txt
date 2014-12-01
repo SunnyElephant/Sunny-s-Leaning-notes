@@ -1,0 +1,44 @@
+定义类模版：
+例如：
+template <class T>
+class Smemory
+{…
+public:
+void input(T x);
+…
+}
+
+（T为参数，在后续中可以改变）
+
+实例化类模版：
+Smemory<int> mol；   //表示将类模板Smemory的类型参数T全部替换成int 型，从而创建一个具体的类，并生成该具体类的一个对象mol。
+
+
+
+
+类模版的派生：
+
+可以从类模板派生出新的类，既可以派生类模板，也可以派生非模板类。派生方法：
+⑴ 从类模板派生类模板可以从类模板派生出新的类模板，它的派生格式如下例所示：
+template <class T>
+class base
+{
+……
+};
+template <class T>
+class derive:public base<T>
+{
+……
+};
+与一般的类派生定义相似，只是在指出它的基类时要缀上模板参数，即base<T>。
+⑵ 从类模板派生非模板类 可以从类模板派生出非模板类，在派生中，作为非模板类的基类，必须是类模板实例化后的模板类，并且在定义派生类前不需要模板声明语句：template<class>。例如：
+template <class T>
+class base
+{
+……
+};
+class derive:public base<int>
+{
+……
+};
+在定义derive类时，base已实例化成了int型的模板类。

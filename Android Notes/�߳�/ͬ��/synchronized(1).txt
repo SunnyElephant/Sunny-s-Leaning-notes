@@ -1,0 +1,42 @@
+Java语言的关键字，当它用来修饰一个方法或者一个代码块的时候，能够保证在同一时刻最多只有一个线程执行该段代码。
+
+     一、当两个并发线程访问同一个对象object中的这个synchronized(this)同步代码块时，一个时间内只能有一个线程得到执行。另一个线程必须等待当前线程执行完这个代码块以后才能执行该代码块。
+
+     二、然而，当一个线程访问object的一个synchronized(this)同步代码块时，另一个线程仍然可以访问该object中的非synchronized(this)同步代码块。
+
+     三、尤其关键的是，当一个线程访问object的一个synchronized(this)同步代码块时，其他线程对object中所有其它synchronized(this)同步代码块的访问将被阻塞。
+
+     四、第三个例子同样适用其它同步代码块。也就是说，当一个线程访问object的一个synchronized(this)同步代码块时，它就获得了这个object的对象锁。结果，其它线程对该object对象所有同步代码部分的访问都被暂时阻塞。
+
+
+
+public class Worker {  
+    public synchronized void executeJob() {  
+          
+    }  
+} 		这种相当于对对象加锁。
+
+
+package org.test.thread;
+
+public class Worker {
+
+	
+    public static synchronized void executeJob() {
+		
+	 
+    }
+
+}
+		这种相当于对类加锁，当这个类的不同对象下的不同线程，只能有一个线程同时访问。
+
+
+
+private final static Lock reentrantLock = new ReentrantLock();	//和static的synchronized方法类似
+private final Lock reentrantLock = new ReentrantLock();		//和普通的synchronized方法类似
+
+
+Lock与synchronized的区别（仅列出主要的）
+1.当块被同步，如果不想等了，synchronized无法停止等待，也没办法得到锁，而Lock可以用tryLock方法轻松做到。
+2.性能上Lock更优
+添加了类似锁投票、定时锁等候和可中断锁等候的一些特性。此外，它还提供了在激烈争用情况下更佳的性能。

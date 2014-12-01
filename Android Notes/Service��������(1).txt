@@ -1,0 +1,21 @@
+当service被创建时，会调用onCreate方法。
+当多次启动一个已有service时将不会回调onCreate方法，但是每次启动时都会调用onStartCommand方法。
+
+service子类必须实现IBinder onBind(Intent intent)方法，该方法返回一个IBinder对象，应用程序可以通过该对象与service组件通信。
+
+当service被关闭时，会回调onDestory方法。
+当该service上绑定的所有客户端都断开连接事，将会回调该方法。
+
+
+当调用bindService(serviceIntent, this, Context.BIND_AUTO_CREATE);时，服务被绑定，此时会回调service的onBind方法，onBind方法返回一个IBinder对象，接着回调Activity的onServiceConnected(ComponentName arg0, IBinder binder)方法，其中里面的binder参数就是返回的IBinder对象。
+
+
+可以通过这个IBinder对象获取service的数据，从而进通信。
+echoService = ((EchoService.EchoServiceBinder)binder).getService();
+if(echoService != null)
+	System.out.println("当前数值为"+ echoService.getCurrnt());
+
+
+
+
+如果是通过bindService启动的service,则当所有绑定取消时，service执行完onUnBind之后，就会执行onDestory。

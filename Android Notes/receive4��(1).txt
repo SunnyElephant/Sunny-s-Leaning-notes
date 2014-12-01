@@ -1,0 +1,32 @@
+		//1、 声明
+		BroadcastReceiver bcastReceiver;
+
+		//2、 oncreate里面注册
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(SETTEXT);
+		filter.addAction(STOP);
+		filter.addCategory("default");
+		bcastReceiver = new BroadcastReceiver() {
+
+			public void onReceive(Context context, Intent intent) {
+				if (SETTEXT.equalsIgnoreCase(intent.getAction())) {
+					t1.setText(intent.getStringExtra("T"));
+				}
+			}
+
+		};
+
+		registerReceiver(bcastReceiver, filter);
+
+		//3、 onDestroy里面销毁
+
+		if (bcastReceiver != null)
+			unregisterReceiver(bcastReceiver);
+		super.onDestroy();
+
+		//4、 调用
+		Intent intent = new Intent();
+		intent.setAction(SETTEXT);
+		intent.putExtra("T", "");
+		sendBroadcast(intent);
+		return null;

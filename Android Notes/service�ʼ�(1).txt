@@ -1,0 +1,3 @@
+同样要在mainfest.xml里面注册service
+
+使用startService(serviceIntent);建立的service在窗体被销毁后，不会被销毁。而使用bindService(serviceIntent, this, Context.BIND_AUTO_CREATE);建立的service在窗体被销毁后，将被销毁。

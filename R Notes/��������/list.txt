@@ -1,0 +1,9 @@
+g<-"My First List"
+h<-c(25,26,18,39)
+k<-c("ONE","TWO","THREE")
+j<-matrix(1:10,nrow=5)
+mylist<-list(title=g,ages=h,j,k)
+
+
+
+mylist[[2]]和mylist[["age"]]都输出同样的东西

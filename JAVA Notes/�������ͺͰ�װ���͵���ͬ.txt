@@ -1,0 +1,11 @@
+包装类型是类类型，有equals等成员函数
+而基本类型没有成员函数。
+八种基本类型：
+-byte
+-char
+-short
+-int
+-long
+-float
+-double
+-boolean

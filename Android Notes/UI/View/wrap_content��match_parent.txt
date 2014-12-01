@@ -1,0 +1,5 @@
+如果将layout_width设置成match_parent表示让View的宽度填充满布局。
+如果设置成wrap_content表示让View的宽度刚好可以包含其内容。
+
+
+*注意，前提是这个view要在一个布局里面，否则这两个属性设置无效!

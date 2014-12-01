@@ -1,0 +1,3 @@
+如何将一个Activity设置成窗口的样式? 
+答：   在AndroidManifest.xml 中定义Activity的地方一句话android:theme="@android:style/Theme.Dialog"
+或android:theme="@android:style/Theme.Translucent"就变成半透明的

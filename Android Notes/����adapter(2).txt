@@ -1,0 +1,1 @@
+adapter通常用于加载图片，只要把图片容器（如ImageView,Gallery,GridView）和适配器关联，就可以在图片从看不见到看见的时候自动出发adapter的getView事件。而一次能加载多少张图片，adapter的getView方法就会执行n+1次，而最后一次会把焦点聚焦在选中的图片上。

@@ -1,0 +1,6 @@
+status<-c("Poor","Improved","Excellent")
+//把status变为一个有排序的因子（默认以字母顺序作为向量值的大小顺序）
+status<-factor(status,ordered=TRUE)
+
+//如此设定levels可以强制改变默认排序
+status<-factor(status,ordered=TRUE,levels=c("Poor","Improved","Excellent"))

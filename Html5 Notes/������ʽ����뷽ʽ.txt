@@ -1,0 +1,15 @@
+外部引用：
+<link rel="stylesheet" type="text/css" href="myStyle.css">
+
+
+
+内部样式：
+<style type="text/css">
+	p{
+		color:red;
+	 }
+</style>
+
+
+内联样式：
+<p style="color:red">test style</p>

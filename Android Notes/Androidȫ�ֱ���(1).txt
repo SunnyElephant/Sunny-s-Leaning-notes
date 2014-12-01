@@ -1,0 +1,23 @@
+1) 创建一个新类扩展自 Application 类：
+
+public  class  Global extends Application { 
+    private Boolean _notification=false; 
+    public Boolean get_notification() { 
+        return _notification; 
+    } 
+    public void set_notification(Boolean _notification) { 
+        this._notification = _notification; 
+    } 
+} 
+
+2) 添加新类到 AndroidManifest 文件作为 application 标签的属性：
+
+<application 
+android:name=".Global" 
+        .... /> 
+3) 你可通过 Context.getApplicationContext() 方法来访问到该全局变量：
+
+Global global; 
+    public void onCreate(Bundle savedInstanceState) { 
+        global=((Global)getApplicationContext()); 
+        Boolean notification=global.get_notification();} 

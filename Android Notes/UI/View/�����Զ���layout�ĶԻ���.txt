@@ -1,0 +1,15 @@
+首先要创建一个layout
+
+然后在activity里面不用设置setContextView();但是这样做的后果是，你如果想获得layout里的控件，你不能使用findViewById();你必须使用layout.findViewById();
+
+然而，这个layout怎么获得呢？答案就在下面：
+LayoutInflater inflater = getLayoutInflater();
+View layout = inflater.inflate(R.layout.changerangediolog, (ViewGroup) findViewById(R.id.changerange));
+
+
+然后就可以通过et_xInshow = (EditText) layout.findViewById(R.id.et_xToShow);获取layout中控件。
+
+然后再new AlertDialog.Builder(this).setTitle("自定义布局").setView(layout);就可以实现自定义layout的对话框，对了，别忘了在manifest里面注册这个窗体，并设置Theme.Dialog属性噢。~
+
+
+在setContextView()之前，都不能使用R.layout.获取控件

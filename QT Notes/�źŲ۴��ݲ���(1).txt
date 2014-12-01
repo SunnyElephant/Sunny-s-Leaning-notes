@@ -1,0 +1,79 @@
+信号槽如何传递参数（或带参数的信号槽）
+ 
+利用Qt进行程序开发时，有时需要信号槽来完成参数传递。带参数的信号槽在使用时，有几点需要注意的地方，下面结合实例进行介绍。
+ 
+第一点：当信号与槽函数的参数数量相同时，它们参数类型要完全一致。
+ 
+信号：
+ 
+[cpp]  
+void iSignal(int b);  
+ 
+槽：
+[cpp] 
+void MainWindow::iSlot(int b)  
+{  
+    QString qString;  
+    qDebug()<<qString.number(b);  
+}  
+ 
+信号槽绑定：
+[cpp] 
+connect(this, SIGNAL(iSignal(int)), this, SLOT(iSlot(int)));  
+ 
+发送信号：
+[cpp] 
+emit iSignal(5);  
+ 
+结果：
+ 
+可以看出，参数已经成功传递。
+ 
+ 
+第二点：当信号的参数与槽函数的参数数量不同时，只能是信号的参数数量多于槽函数的参数数量，且前面相同数量的参数类型应一致，信号中多余的参数会被忽略。
+ 
+信号：
+ 
+[html]  
+void iSignal(int a, float b);  
+ 
+槽：
+[html] 
+void MainWindow::iSlot(int b)  
+{  
+    QString qString;  
+    qDebug()<<qString.number(b);  
+}  
+ 
+信号槽：
+[html] 
+connect(this, SIGNAL(iSignal(int, float)), this, SLOT(iSlot(int)));  
+ 
+发送信号：
+[html]  
+emit iSignal(5, 0.3);  
+ 
+结果：
+ 
+ 
+此外，在不进行参数传递时，信号槽绑定时也是要求信号的参数数量大于等于槽函数的参数数量。这种情况一般是一个带参数的信号去绑定一个无参数的槽函数。如下例所示。
+ 
+信号：
+ 
+[cpp]  
+void iSignal(int a, float b);  
+槽函数：
+[cpp] view plaincopy
+void MainWindow::iSlot() //int b  
+{  
+    QString qString = "I am lyc_daniel.";  
+    qDebug()<<qString;  
+}  
+ 
+信号槽：
+[html]  
+connect(this, SIGNAL(iSignal(int, float)), this, SLOT(iSlot()));  
+ 
+发送信号：
+[html] 
+emit iSignal(5, 0.3);  

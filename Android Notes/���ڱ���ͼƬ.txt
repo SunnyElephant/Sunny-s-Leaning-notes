@@ -1,0 +1,31 @@
+	private String saveBitMap(Bitmap bitmap) throws IOException {
+		String spath = Environment.getExternalStorageDirectory() + "/TestPic/web";
+		String picName = spath; 
+		picName+=".png";
+		File f = new File(picName); 
+		if (f.exists())
+			f.delete();
+		else
+			f.createNewFile();
+		try {
+			FileOutputStream out = new FileOutputStream(f);
+
+			bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+			out.flush();
+			out.close();
+			Toast toast=new Toast(this);
+			toast.makeText(this,picName+"已保存", Toast.LENGTH_SHORT).show();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return picName;
+	}
+
+
+要加上许可: <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+使之可以操作手机存储。
