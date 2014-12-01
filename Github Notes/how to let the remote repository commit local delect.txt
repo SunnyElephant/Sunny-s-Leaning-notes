@@ -1,0 +1,3 @@
+when you delect some files on local,you may want to push it to remote repository,and want it delect on remote too.
+but if you ues "git commit -m "describe"" you can't let the remote repository delect those files.
+you must use "git commit -a -m "describe"",than you push,it will delect on remote repository too.
