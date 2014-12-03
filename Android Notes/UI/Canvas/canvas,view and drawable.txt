@@ -1,0 +1,90 @@
+概述
+　　当写一个应用时，恰当的决定你的图形需求是很重要的．不同的图形任务对应不同的技术．例如，一个静态应用的图形和动画的实现肯定与一个交互式游戏非常不同．这里，我们将讨论一些在android上绘制图形时的操作以及它们最适合应用的任务．
+
+Canvas和Drawables
+
+　　Android提供了一系列View部件来为大多数用户界面提供通常的功能．你也可以扩展这些部件来修改它们的外观和行为．另外，你可以使用Canvas类的方法来绘制你自己的2D显示或为那些像纹理按钮或逐帧显示的动画之类的东西或创建Drawable对象．
+
+硬件加速
+
+　　从Android3.0开始，你可以硬加速大多数以CanvasAPI完成的绘画工作来大幅提高它们的性能．
+
+OpenGL
+
+　　Android支持OpenGLES 1.0和2.0，Android框架API和(NDK)都同样支持．在CanvasAPI不支时使用框架API添加一些图形增强功能是被推荐的或者你不在意高性但期望是平台无关的．使用框架API比NDK性能要低，所以对于很多图形交互应用比如游戏，使用NDK是最好的(重点注意尽管你使用框架API依然获得足够的性能．比如，Google主体应用是全用框架API开发的)．当你的有很多原生代码要移植到android时NDK中的OpenGL还是很有用处的．
+
+Canvas
+　　Android框架APIs提供了一系列2D绘画APIs使你可以在一个canvas上画出你自己的图形或修改已存在的View来定制它们的外观．当画2D图形时，典型情况下，你将使用以下两方法之一：
+
+a.把你的图形或动画绘制到你的layout中的一个View上．你的图形的绘制被系统的标准View绘制过程所处理— 你只需定义进入View的图形即可．
+
+b.在一个Canvas中直接绘制图形．用此方法，你需亲自调用恰当的类的onDraw()方法(把它传给你的Canvas)，或Canvas的draw...()方法们中的一个(比如drawPicture())．在这样做时，你也可以任意控制动画．
+
+选项"a,"画到View上，是当你想画不需动态改变的简单图形并且不是高性能要求游戏的一部分时的最佳的选择．例如，你应该在你想显示一个静态图形或预先定义的动画时画到View上．
+
+
+
+选项"b,"画到Canvas上，当你的应用需要定期地重画自己时是更好的选择．像视频游戏这样的应用应画到Canvas上，有不止一种方法来这样做：
+
+在你的UIActivity线程中，你创建一个自定义View组件，然后调用invalidate()然后处理onDraw()回调．
+
+或者，在不同的线程中，你管理一个SurfaceView并且以最快的可能速度执行向Canvas绘画的动作(你不需要执行invalidate())．
+
+用Canvas绘画
+　　当你正在写一个应用，在其中你想执行特殊的绘画并且／或者控制图形动画，你应该使用Canvas作画．一个其实只是一个中间层，只是一个接口，它代表了实际的图形绘制到的表面— 它承受了所有的绘画调用．通过Canvas，你的绘制实际执行到一个后台Bitmap上，这个Bitmap被放在窗口中．
+
+
+
+　　在响应绘画事件的onDraw()回调方法中，提供给你了Canvas，于是你只需把你的绘制调用传给它就行了．当处理一个SurfaceView对象时，你可以从SurfaceHolder.lockCanvas()获取一个Canvas．然而，如果你需要创建一个新的Canvas，那么你必须定义实际绘制所在的Bitmap．Bitmap是Canvas永远所需要的．你可以像下面这样创建一个新的Canvaslike this:
+
+Bitmap b =Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+
+Canvas c =new Canvas(b);
+
+
+
+　　现在你的Canvas将画到所定义的Bitmap上．使用Canvas画完后，你可以使用任一个Canvas.drawBitmap(Bitmap,...)方法把你的Bitmap移到另一个Canvas．推荐你最终还是使用View.onDraw()或SurfaceHolder.lockCanvas()提供给你的Canvas作画．
+
+
+　　Canvas类有很多绘制方法可以使用，比如drawBitmap(...)，drawRect(...)，drawText(...)等等．也有其它类也具有draw()方法．例如，你有一个Drawable对象要放到Canvas上，Drawable具有它自己的draw()方法，你只需把你的Canvas作为一个参数传给这个方法即可．
+
+画到View
+　　如果你的应用不需要大量的处理运算或保证帧率(可能是一个棋类游戏，一个贪吃蛇游戏或其它慢动画的应用)，那么你应考虑创建一个自定义的View组件然后在它的View.onDraw()中使用Canvas绘制．这样做的方便之处是Android框架将提供给你一个预定义好的Canvas．
+
+
+　　要这样做，从View派生(或从其子孙派生)然后定义onDraw()回调方法．这个方法将被Android框架调用，要求你的View画出它自己的样子．这是你使用Canvas执行所有绘制动作的地方．
+
+
+
+　　Android框架将仅在需要时才调用onDraw()．每次你的应用准备好被绘制时，你必须调用invalidate()来请求你的View无效．这表明了你想让你的View被绘制于是Android将调用你的onDraw()方法(尽管这不能保证回调方法会被立即执行)．
+
+
+　　在你的View组件的onDraw()中，使用给你的Canvas来进行所有的绘制工作：使用各种Canvas.draw...()方法，或把你的Canvas作为参数调用其它类的draw()方法．一旦你的onDraw()结束，Android框架将使用你的Canvas来画一个Bitmap，Bitmap被系统管理．
+
+
+
+　　注：为了在主Acitivity所在线程之外的线程请求view无效，你必须调用postInvalidate()．
+
+
+
+　　可以去SDK例程目录:<your-sdk-directory>/samples/Snake/中看贪吃蛇游戏例子．
+
+画到SurfaceView
+　　SurfaceView是View的一种特殊子类，它在View派生树中提供一个专门的绘画接口，其目的是把这个绘画接口提供给一个应用的第二个线程，于是应用不需等待系统的View派生类准备好作画再进行其它工作，而是另外的线程引用了一个SurfaceView，SurfaceView可以按自己的速度画到自己的Canvas上．
+
+
+
+　　要使用它，你首先要从SurfaceView派生创建一个新的类．这个类要实现SurfaceHolder.Callback回调接口．这个接口将把后台表面的信息通知给你，比如当表面被创建，改变或销毁．这些事件都是很重要的，因为你可以从它们知道何时你可以开始作画，你是否需要根据新表面的属性进行调整，和什么时候应该停止绘画并且可能要杀死一些任务．在你的SurfaceView类中也是定义你的第二个线程类的好地方，这个线程类将执行所有对你的Canvas的作画过程．
+
+
+
+　　你应该通过一个SurfaceHolder来操作你的表面对象而不是直接操作它．所以，当你的SurfaceView初始化后，通过调用getHolder()获取SurfaceHolder．你然后还应该调用addCallback()(把this传给它)来通知SurfaceHolder你想接收SurfaceHolder回调(从SurfaceHolder.Callback)．最后在你的SurfaceView类中重写SurfaceHolder.Callback的每一个方法．
+
+
+　　为了在你的第二个线程中画到表面的Canvas上，你必须把你的SurfaceHandler传给第二线程并且用lockCanvas()获取Canvas．你现在可以用Canvas做画了．一旦你完成了绘画，调用unlockCanvasAndPost()，把你的Canvas对象传给它，现在，表面将按你给它的来绘制Canvas．每次你想作画，就执行这个canvas加锁和解锁的步骤．
+
+
+　　注：每次你从SurfaceHolder取得Canvas，Canvas的上一次的状态将保留．你必须每次都完全重画你的表面．例如，你可以通过drawColor()填充颜色或通过drawBitmap()设置一个背景图像来清空Canvas的上一次状态．否则，你将会看到你上次作画的痕迹．
+
+
+我看例子，可以去看LunarLander游戏，在SDKsamples 文件夹下:<your-sdk-directory>/samples/LunarLander/．或者，浏览在SampleCode一文只浏览源码（尚未出此章，敬请期待）．
