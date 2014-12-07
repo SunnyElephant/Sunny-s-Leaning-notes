@@ -1,0 +1,83 @@
+Intent中的四个重要属性——Action、Data、Category、Extras　　
+Intent作为联系各Activity之间的纽带，其作用并不仅仅只限于简单的数据传递。通过其自带的属性，其实可以方便的完成很多较为复杂的操作。例如直接调用拨号功能、直接自动调用合适的程序打开不同类型的文件等等。诸如此类，都可以通过设置Intent属性来完成。
+　　Intent主要有以下四个重要属性，它们分别为：
+　　　　Action：Action属性的值为一个字符串，它代表了系统中已经定义了一系列常用的动作。通过setAction()方法或在清单文件AndroidManifest.xml中设置。默认为：DEFAULT。
+　　　　Data：Data通常是URI格式定义的操作数据。例如：tel:// 。通过setData()方法设置。
+　　　　Category：Category属性用于指定当前动作（Action）被执行的环境。通过addCategory()方法或在清单文件AndroidManifest.xml中设置。默认为：CATEGORY_DEFAULT。
+　　　　Extras：Extras属性主要用于传递目标组件所需要的额外的数据。通过putExtras()方法设置。
+　　四个属性各自的常用值如下所示：
+　　Action：
+　　　  ACTION_MAIN：Android Application的入口，每个Android应用必须且只能包含一个此类型的Action声明。　
+　　　　ACTION_VIEW：系统根据不同的Data类型，通过已注册的对应Application显示数据。
+　　　　ACTION_EDIT：系统根据不同的Data类型，通过已注册的对应Application编辑示数据。　
+　　　　ACTION_DIAL：打开系统默认的拨号程序，如果Data中设置了电话号码，则自动在拨号程序中输入此号码。　
+　　　　ACTION_CALL：直接呼叫Data中所带的号码。　
+　　　　ACTION_ANSWER：接听来电。　
+　　　　ACTION_SEND：由用户指定发送方式进行数据发送操作。
+　　　　ACTION_SENDTO：系统根据不同的Data类型，通过已注册的对应Application进行数据发送操作。　
+　　　　ACTION_BOOT_COMPLETED：Android系统在启动完毕后发出带有此Action的广播（Broadcast）。　
+　　　　ACTION_TIME_CHANGED：Android系统的时间发生改变后发出带有此Action的广播（Broadcast）。　
+　　　　ACTION_PACKAGE_ADDED：Android系统安装了新的Application之后发出带有此Action的广播（Broadcast）。　
+　　　　ACTION_PACKAGE_CHANGED：Android系统中已存在的Application发生改变之后（如应用更新操作）发出带有此Action的广播（Broadcast）。　
+　　　　ACTION_PACKAGE_REMOVED：卸载了Android系统已存在的Application之后发出带有此Action的广播（Broadcast）。　　
+　　Category：
+　　　  CATEGORY_DEFAULT：Android系统中默认的执行方式，按照普通Activity的执行方式执行。　
+　　　　CATEGORY_HOME：设置该组件为Home Activity。
+　　　　CATEGORY_PREFERENCE：设置该组件为Preference。　
+　　　　CATEGORY_LAUNCHER：设置该组件为在当前应用程序启动器中优先级最高的Activity，通常为入口ACTION_MAIN配合使用。　
+　　　　CATEGORY_BROWSABLE：设置该组件可以使用浏览器启动。　
+　　　　CATEGORY_GADGET：设置该组件可以内嵌到另外的Activity中。
+　　Extras:
+　　　  EXTRA_BCC：存放邮件密送人地址的字符串数组。　
+　　　　EXTRA_CC：存放邮件抄送人地址的字符串数组。
+　　　　EXTRA_EMAIL：存放邮件地址的字符串数组。　
+　　　　EXTRA_SUBJECT：存放邮件主题字符串。　
+　　　　EXTRA_TEXT：存放邮件内容。　
+　　　　EXTRA_KEY_EVENT：以KeyEvent对象方式存放触发Intent的按键。　　
+　　　　EXTRA_PHONE_NUMBER：存放调用ACTION_CALL时的电话号码。　　　
+ 　　Data:
+　　　  tel://：号码数据格式，后跟电话号码。　
+　　　　mailto://：邮件数据格式，后跟邮件收件人地址。
+　　　　smsto://：短息数据格式，后跟短信接收号码。
+　　　　content://：内容数据格式，后跟需要读取的内容。　
+　　　　file://：文件数据格式，后跟文件路径。
+　　　　market://search?q=pname:pkgname：市场数据格式，在Google Market里搜索包名为pkgname的应用。
+            geo://latitude,longitude:经纬数据格式，在地图上显示经纬度指定的位置。
+在intent-filter中指定data属性的实际目的是：要求接收的Intent中的data必须符合intent-filter中指定的data属性，这样达到反向限定Intent的作用。
+例如：在AndroidManifest.xml 中进行如下设置：
+[html] view plaincopy
+<activity android:name=".TestActivity">  
+    <intent-filter>  
+         <action android:name="com.jony.test"/>  
+         <data android:scheme="file"/>  
+    </intent-filter>  
+</activity>  
+那么启动该Activity的Intent必须进行如下设置：
+[java] view plaincopy
+Intent intent = new Intent();  
+Uri uri =  Uri.parse("file://com.android.test:520/mnt/sdcard");  
+intent.setData(uri);  
+data属性解析：android:scheme、android:host、android:port、android:path、android:mimeType
+data的前四个属性构成了URI的组成部分，mimeType设置了数据的类型
+data元素组成的URI模型如下：
+scheme://host:port/path
+举例说明：
+URI   file://com.android.jony.test:520/mnt/sdcard
+scheme-->file:
+host-->com.android.jony.test
+port-->520
+path-->mnt/sdcard
+其中host和port为URI的authority，如果没有指定host，port将被忽略
+data的各属性并不是独立的，data的各属性构成了URI的整个组成部分。要使authority（host和port）有意义，必须指定scheme；要使path有意义，必须使scheme和authority（host和port）有意义。
+URI和intent-filter匹配：
+Intent中URI和intent-filter进行比较的时候只会进行部分的比较：
+（1）当intent-filter中只设置了scheme，只会比较URI的scheme部分；
+（2）当intent-filter中只设置了scheme和authority，那么只会匹配URI中的scheme和authority；
+（3）当intent-filter中设置了scheme、authority和path，那么只会匹配URI中的scheme、authority、path；（path可以使用通配符进行匹配）
+（4）当intent-filter中设置了mimeType，还会进行数据类型的匹配。
+
+总结：
+（1）在AndroidMainfest.xml 中对每一个Activity都做了说明——intent-filter，intent-filter声明了需要接收怎样的Intent，当发送的Intent和intent-filter中定义的相符合，就会启动相应的Activity；
+（2）当有多个Activity符合发送的Intent时，Android系统会列出所有满足Intent的Activity，用户可以通过选择进行相关的操作；
+（3）在一个Activity的intent-filter中可以有多个action、多个category、多个data，这样可以有多种组合与Intent进行匹配。注意：如果在一个Activity中有多个Intent进行匹配的时候，建议使用多个intent-filter与Intent进行匹配。猜测：这样应该可以提高Intent的匹配速度。
+（4）data属性，这是一个进行反向限制Intent的操作，要求Intent的data必须是intent-filter中声明的数据之一（应为在一个intent-filter中可以设置多个data）。注意：如果要启动目标Activity，但是指定的data数据类型与Activity中data数据类型不匹配，将会造成ActivityNotFoundException异常。
