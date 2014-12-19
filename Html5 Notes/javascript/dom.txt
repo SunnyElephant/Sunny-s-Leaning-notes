@@ -1,0 +1,5 @@
+findElementById
+
+change html content: innerHTML
+
+change html attribute: attribute

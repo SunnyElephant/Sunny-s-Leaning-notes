@@ -2,3 +2,5 @@ in the scense that	 	从这个意义上来说
 sided effects			副作用
 Minor issues			小问题
 off-topic			离题
+raw-type			原始类型
+Roughly-speaking		大致来说

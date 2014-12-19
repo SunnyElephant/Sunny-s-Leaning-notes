@@ -5,7 +5,7 @@ acquired		adj:已获得的  v:取得，捕获
 opportunity		机会
 flexible		灵活的
 experiment		n:实验  v:做实验
-compact			adj:紧凑的，简洁的  v:压紧，使结实
+compact			adj:紧凑的，简洁的  v:压紧，使结实  n:协议
 implement	        vt:执行	 n:工具
 duplication 		n:复制，重复
 consistent 		adj:一致的
@@ -17,3 +17,20 @@ textual			adj:文本的
 representation		n:表现，陈述
 indicates 		v:指示，象征，表明
 via			prep:经过，通过，凭借
+raw			adj:生的，未加工的，没经验的
+explicit		adj:明确的
+fixed			adj:固定的
+transition		vt:过渡，转变
+divise			vt:设计，想出
+community		n:社区，群落
+interact		v:互动，相互作用
+roughly		 	大约
+passive			adj:被动的
+mixed			adj:混合的
+precise			adj:精确地
+inherit			vt:继承  adj:继承的
+relevant		adj:有关的，中肯的
+opimized		v:优化，使完善
+integration 		v:集成
+architechure		n:建筑
+closure			n:关闭，停止，闭合 vt:使关闭/停止
