@@ -1,0 +1,40 @@
+public class ClassA {
+
+	protected String str = "A";
+	
+	public ClassA() {
+	}
+
+	public void method() {
+		System.out.println("aaaaaaaaaa");
+		System.out.println(str);
+		System.out.println(ClassA.this.str);
+	}
+}
+public class ClassB extends ClassA {
+
+	public ClassB() {
+		str = "B";
+	}
+	
+	public void method() {
+		System.out.println("bbbbbbbbbbb");
+		super.method();
+	}
+}
+
+public class TestSuper {
+
+	public static void main(String[] args) {
+		ClassB b = new ClassB();
+		b.method();
+	}
+}
+
+结果：
+aaaaaaa
+bbbbbbb
+B
+B
+
+结论:子类调用super后，在父类方法中的this就变成了子类对象的引用。

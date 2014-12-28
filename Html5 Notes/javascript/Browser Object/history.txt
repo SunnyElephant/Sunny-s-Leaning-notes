@@ -1,0 +1,11 @@
+跳转到上一页:
+history.go(-1);
+
+跳转到下两页:
+history.go(2);
+
+后退：
+history.back();
+
+向前：
+history.forward();

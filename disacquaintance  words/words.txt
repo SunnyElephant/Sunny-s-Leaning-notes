@@ -34,3 +34,5 @@ opimized		v:优化，使完善
 integration 		v:集成
 architechure		n:建筑
 closure			n:关闭，停止，闭合 vt:使关闭/停止
+interact		vt:相互影响
+consult			vt:查阅，请教，商量
