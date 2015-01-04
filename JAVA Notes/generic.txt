@@ -1,0 +1,17 @@
+ArrayList<Dog> dogs = new ArrayList<Dog>();
+add....
+takeAnimals(dogs);
+
+public void takeAnimals(ArrayList<Animal> animals){
+}
+*编译出错,dogs不允许传递给animals。
+
+
+ArrayList<Dog> dogs = new ArrayList<Dog>();
+add....
+takeAnimals(dogs);
+
+public void takeAnimals(ArrayList<? extends Animal> animals){
+}
+编译可以通过，原因是在方法参数中使用万用字符会阻止animals添加元素。从而不会破坏animals的集合。
+<? extends Animal>同<T extends Animal>

@@ -1,0 +1,7 @@
+git push xxx yyy
+
+xxx:remote repository(always origin)
+$ git remote add xxx git@github.com:michaelliao/learngit.git
+
+
+yyy:remote repository branch(master dev ...and so on)
