@@ -1,0 +1,14 @@
+android.app.Fragment是不兼容android3.0以下版本的，但是support.v4.Fragment一直兼容到1.6。
+
+但是 :
+1、编译无错误，运行时报错：android.view.InflateException: Binary XML file line #7: Error inflating class fragment
+
+出现了上述错误，原因往往是你在某个.xml文件使用了<fragment>标签，但对应的xx.java文件中import的却是android.support.v4.app.Fragment。android.support.v4.app.Fragment：可以兼容到1.6的版本，不能使用<fragment>标签，需要在程序中通过add或者replace的方式添加。
+
+解决方法：
+1.使用FragmentActivity:
+mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_shopping);
+FragmentActivity是support.v4包里的类。
+
+
+*如果是用FragmentActivity，那么你的Fragment要用support.v4.Fragment
