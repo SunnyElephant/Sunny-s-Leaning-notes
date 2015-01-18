@@ -1,0 +1,1 @@
+git mv fileA fileC 将本地工作区的fileA更名为fileC

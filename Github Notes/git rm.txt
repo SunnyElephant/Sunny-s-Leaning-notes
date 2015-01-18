@@ -1,0 +1,4 @@
+git rm file 将会删除本地工作区的file文件
+git rm --cached file 将会删除暂存区的file文件，但是不删除本地的
+
+

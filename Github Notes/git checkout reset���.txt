@@ -1,0 +1,4 @@
+git checkout -- file  用暂存区的file替换工作区的file（撤销提交到暂存区）
+git checkout HEAD -- file 用HEAD提交区的file替换掉工作区的file
+git reset -- file 用提交区的file替换掉暂存区的file （撤销commit）
+git reset --hard HEAD^ commit区回退到上一个版本，并把上一个版本的commit内容替换到本地工作区
