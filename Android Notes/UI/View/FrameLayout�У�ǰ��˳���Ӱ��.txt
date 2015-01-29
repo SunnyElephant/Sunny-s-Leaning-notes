@@ -1,0 +1,45 @@
+顺序一：
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#aaccbb"
+            android:text="aa"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#aabbcc"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </FrameLayout>
+
+顺序二：
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#aabbcc"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#aaccbb"
+            android:text="aa"
+            android:textSize="14sp" />
+    </FrameLayout>
+
+结果就是，顺序一，可以使得tv和ll覆盖同样一片区域，但是顺序二却只显示了tv，ll不翼而飞。具体原理后面补上。
